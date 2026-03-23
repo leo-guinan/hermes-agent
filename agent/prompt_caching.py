@@ -35,6 +35,9 @@ def _apply_cache_marker(msg: dict, cache_marker: dict, native_anthropic: bool = 
     if isinstance(content, list) and content:
         last = content[-1]
         if isinstance(last, dict):
+            # Skip if this is a text block with empty text — Anthropic rejects cache_control on empty text
+            if last.get("type") == "text" and not last.get("text", ""):
+                return
             last["cache_control"] = cache_marker
 
 
