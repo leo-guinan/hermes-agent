@@ -23,7 +23,7 @@ def _apply_cache_marker(msg: dict, cache_marker: dict, native_anthropic: bool = 
         return
 
     if content is None or content == "":
-        msg["cache_control"] = cache_marker
+        # Cannot set cache_control on empty content — Anthropic rejects this
         return
 
     if isinstance(content, str):
